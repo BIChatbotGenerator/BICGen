@@ -1,77 +1,77 @@
 {
   "auth": {
-    "text": "Authentication \ud83d\udd10"
+    "text": "احراز هویت \ud83d\udd10"
   },
   "home": {
-    "text": "\ud83c\udfd8 Home"
+    "text": "\ud83c\udfd8 خانه"
   },
   "ltr-home": {
-    "text": "Home \ud83c\udfd8 "
+    "text": "خانه \ud83c\udfd8 "
   },
   "newReport": {
-    "text": "Make a Report \ud83d\udcdd"
+    "text": "ساخت گزارش \ud83d\udcdd"
   },
   "reportsList": {
-    "text": "Reports List \ud83d\udcc3"
+    "text": "لیست گزارش ها \ud83d\udcc3"
   },
   "profile": {
-    "text": "Profile \ud83d\udc64"
+    "text": "پروفایل \ud83d\udc64"
   },
   "settings": {
-    "text": "Settings \u2699"
+    "text": "تنظیمات \u2699"
   },
   "help": {
-    "text": "Help \ud83d\udca1"
+    "text": "کمک \ud83d\udca1"
   },
   "support": {
-    "text": "Support \ud83d\udc68\u200d\ud83d\udcbb"
+    "text": "پشتیبانی \ud83d\udc68\u200d\ud83d\udcbb"
   },
   "about": {
-    "text": "About \ud83e\udea7"
+    "text": "درباره \ud83e\udea7"
   },
   "back": {
-    "text": "\ud83d\udd19 Back"
+    "text": "\ud83d\udd19 بازگشت"
   },
   "newTicket": {
-    "text": "New Ticket \ud83d\udcec"
+    "text": "تیکت جدید \ud83d\udcec"
   },
   "reply": {
-    "text": "\u21a9 reply"
+    "text": "\u21a9 پاسخ"
   },
   "close": {
-    "text": "close \u274c"
+    "text": "بستن \u274c"
   },
   "changeProfile": {
-    "text": "Change Profile"
+    "text": "ویرایش پروفایل"
   },
   "firstName": {
-    "text": "First Name"
+    "text": "نام"
   },
   "lastName": {
-    "text": "Last Name"
+    "text": "نام خانوادگی"
   },
   "prev": {
-    "text": "\u2b05 Previous"
+    "text": "\u2b05 قبلی"
   },
   "next": {
-    "text": "Next \u27a1"
+    "text": "بعدی \u27a1"
   },
   "hr": {
-    "text": "HR"
+    "text": "منابع انسانی"
   },
   "fin": {
-    "text": "Financial"
+    "text": "مالی"
   },
   "recruitment": {
-    "text": "Recruitment"
+    "text": "استخدام"
   },
   "fire": {
-    "text": "Fire"
+    "text": "اخراج"
   },
   "profit": {
-    "text": "Profit"
+    "text": "سود"
   },
   "sell": {
-    "text": "Sell"
+    "text": "فروش"
   }
 }

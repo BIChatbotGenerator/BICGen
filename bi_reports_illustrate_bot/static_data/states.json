@@ -3,23 +3,23 @@
     "input": "+{states}",
     "keyboards": ["filter"],
     "msgs": [
-      "We are in {query_name} report\\. \nNow you can apply your intended filters 🔍"
+      "ما در گزارش {query_name} هستیم\\. \nاکنون می توانید فیلترهای مورد نظر خود را اعمال کنید 🔍"
     ],
     "jump": "query_filter_adjust"
   },
   "query_filter_adjust": {
     "input": "+{states}",
     "keyboards": ["adjustFilter"],
-    "msgs": ["We are in {cur_filter} filter"],
+    "msgs": ["ما در فیلتر {cur_filter} هستیم"],
     "jump": "query_filter_run"
   },
   "query_filter_run": {
     "keyboards": ["back_and_home"],
-    "msgs": ["Just one step remained\\!\nWhat is your intended chart 📊\\?"],
+    "msgs": ["تنها یک مرحله باقی مانده است\\!\nنمودار مورد نظر شما چیست 📊\\?"],
     "jump": "query_filter_run"
   },
   "auth_home_reportsList": {
     "keyboards": ["back_and_home", "reportsList"],
-    "msgs": ["Welcome to archive of your reports\\!"]
+    "msgs": ["به آرشیو گزارش ها خود خوش آمدید\\!"]
   }
 }

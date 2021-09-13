@@ -24,7 +24,6 @@ class TelegramBot(AbstractTelegramBot):
         return TelegramState.objects.get_or_create(telegram_user=db_user, telegram_chat=db_chat)[0]
 
     def pre_processing(self, update: Update, user, db_user, chat, db_chat, state: TelegramState):
-        chat_id = update.get_chat().get_id()
         super(TelegramBot, self).pre_processing(
             update, user, db_user, chat, db_chat, state)
         # bot.sendMessage(chat_id, f'state memory is : {state.get_memory()}')
@@ -76,5 +75,5 @@ def import_processors():
 dv = DataVisualizer(rel_file_path='Financial Sample.xlsx')
 state_manager = StateManager()
 bot = TelegramBot(bot_token, state_manager)
-# bot.setMyCommands([BotCommand.a('restart', 'Restart The Bot'), BotCommand.a('start', 'Start The Bot')])
+# bot.setMyCommands([BotCommand.a('restart', 'راه اندازی مجدد بات'), BotCommand.a('start', 'شروع بات')])
 import_processors()

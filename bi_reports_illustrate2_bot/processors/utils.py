@@ -69,16 +69,19 @@ charts = {
 
 MEDIA_STATE = 'query_filter'
 
+from pathlib import Path
+APP_DIR = Path(__file__).resolve().parent.parent
+
 buttons_dynamic_data = json.load(
-    open(settings.BASE_DIR/"bi_reports_illustrate_bot/data/buttons.json"))
+    open(APP_DIR/"data/buttons.json"))
 keyboards_dynamic_data = json.load(
-    open(settings.BASE_DIR/"bi_reports_illustrate_bot/data/keyboards.json"))
+    open(APP_DIR/"data/keyboards.json"))
 states_dynamic_data = json.load(
-    open(settings.BASE_DIR/"bi_reports_illustrate_bot/data/states.json"))
+    open(APP_DIR/"data/states.json"))
 queries_dynamic_data = json.load(
-    open(settings.BASE_DIR/"bi_reports_illustrate_bot/data/queries.json"))
+    open(APP_DIR/"data/queries.json"))
 filters_dynamic_data = json.load(
-    open(settings.BASE_DIR/"bi_reports_illustrate_bot/data/filters.json"))
+    open(APP_DIR/"data/filters.json"))
 
 # * remove the filter names that are not in the columns of dataset
 invalid_filters = []
@@ -96,11 +99,11 @@ for q_name, data in queries_dynamic_data.items():
 
 
 buttons_static_data = json.load(
-    open(settings.BASE_DIR/"bi_reports_illustrate_bot/static_data/buttons.json"))
+    open(APP_DIR/"static_data/buttons.json"))
 keyboards_static_data = json.load(
-    open(settings.BASE_DIR/"bi_reports_illustrate_bot/static_data/keyboards.json"))
+    open(APP_DIR/"static_data/keyboards.json"))
 states_static_data = json.load(
-    open(settings.BASE_DIR/"bi_reports_illustrate_bot/static_data/states.json"))
+    open(APP_DIR/"static_data/states.json"))
 
 # merge dynamic and static data
 buttons_data, keyboards_data, states_data, queries_data, filters_data = [

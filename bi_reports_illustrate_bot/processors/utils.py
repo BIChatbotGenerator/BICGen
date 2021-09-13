@@ -46,15 +46,15 @@ class MessageText(Enum):
 
 class ButtonText(Enum):
     PAY = 'Payment'
-    PIE = 'Pie Chart'
-    GRP = 'Multi Group Chart'
-    BAR = 'Bar Chart'
-    LIN = 'Linear Chart'
+    PIE = 'نمودار دایره ای'
+    GRP = 'نمودار چند ستونی'
+    BAR = 'نمودار میله‌ای'
+    LIN = 'نمودار خطی'
     AUT = 'Authentication'
     DRW = 'Download'
-    FNS = 'ّFinish'
+    FNS = 'پایان'
     ACP = 'Accept'
-    CNL = 'Cancel'
+    CNL = 'لغو'
 
 
 RESULT_PER_PAGE = 5

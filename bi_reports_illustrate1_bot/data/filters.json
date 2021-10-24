@@ -1,0 +1,42 @@
+{
+    "day":{
+        "text": "day",
+        "type": "minMax"
+    },
+    "month":{
+        "text": "month",
+        "type": "minMax"
+    },
+    "Year":{
+        "text": "Year",
+        "type": "minMax"
+    },
+    "Country":{
+        "text": "Country",
+        "type": "multiSelect"
+    },
+    "Month Number":{
+        "text": "Month Number",
+        "type": "minMax"
+    },
+    "Units Sold":{
+        "text": "Units Sold",
+        "type": "minMax"
+    },
+    "Month Name":{
+        "text": "Month Name",
+        "type": "multiSelect"
+    },
+    "Segment":{
+        "text": "Segment",
+        "type": "multiSelect"
+    },
+    "Product":{
+        "text": "Product",
+        "type": "multiSelect"
+    },
+    "Profit":{
+        "text": "Profit",
+        "type": "minMax"
+    }
+}

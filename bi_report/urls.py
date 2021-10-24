@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from bi_reports_illustrate_bot import urls as bi_reports_illustrate_bot_urls
+from bi_reports_illustrate1_bot import urls as bi_reports_illustrate1_bot_urls
 from bi_reports_illustrate2_bot import urls as bi_reports_illustrate2_bot_urls
 
 
@@ -23,4 +24,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('bi_reports_illustrate_bot/', include(bi_reports_illustrate_bot_urls)),
     path('bi_reports_illustrate2_bot/', include(bi_reports_illustrate2_bot_urls)),
+    path('bi_reports_illustrate1_bot/', include(bi_reports_illustrate1_bot_urls)),
 ]

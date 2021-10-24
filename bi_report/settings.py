@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_tgbot',
     'bi_reports_illustrate_bot',
+    'bi_reports_illustrate1_bot',
     'bi_reports_illustrate2_bot',
 ]
 

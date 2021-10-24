@@ -26,7 +26,7 @@ class MessageText(Enum):
     SLG = 'You has been authorized by {} mobile number'  # Successful login
     REP = 'The {} field has been entered before! Please choose another field'  # Repetitive
     NFU = 'The field {} not found! Please chose a valid field'  # Not FoUnd
-    UEX = "به یاد داشته باشید ، از آنجا که من یک روبات هستم و یک انسان واقعی نیستم ، بهتر است کلمات را به درستی املا کرده یا از دکمه های زیر استفاده کنید."
+    UEX = 'An unexpected problem occurred! Try enter the fields from first again'
     CHP = 'Choose {}th parameter'
     CHT = 'Choose target'
     CTD = 'Click on download button for downloading the chart'
@@ -36,25 +36,25 @@ class MessageText(Enum):
     FSU = 'The field registered'
     CFT = 'Choose a filter'
     FAD = 'Filter {} added successfully ✔'
-    CHS = "لطفاً یکی از بخشهای زیر را انتخاب کنید."
+    CHS = 'Select one of following items\:'
     FDN = 'The filter paramaters already have been set. Click on Save to apply the filter and Cancel to forget this filter'
     IFP = 'The filter param is invalid ✖\nPlease enter a valid value 🙏'
-    NFT = 'ما در {} هستیم\\.\nبا لمس  _*پایان*_ به مرحله بعدی بروید'  # Report State
-    AFT = 'ما در {} هستیم\\.\nفیلترهای مورد نظر خود را اعمال کنید 🔍'  # Apply Filter
-    RVA = 'مقادیر با موفقیت دریافت شدند\\! \nبا کلیک روی _*ذخیره*_ فیلتر را اعمال کنید'
+    NFT = 'We are in {}\\.\nYou can touch _*finish*_ button to go to the next step'  # Report State
+    AFT = 'We are in {}\\.\nNow select your intended filters 🔍'  # Apply Filter
+    RVA = 'The Values received successfully\\! \nClick on _*Save*_ button to apply these to filter'
 
 
 class ButtonText(Enum):
     PAY = 'Payment'
-    PIE = 'نمودار دایره ای'
-    GRP = 'نمودار چند ستونی'
-    BAR = 'نمودار میله‌ای'
-    LIN = 'نمودار خطی'
+    PIE = 'Pie Chart'
+    GRP = 'Multi Group Chart'
+    BAR = 'Bar Chart'
+    LIN = 'Linear Chart'
     AUT = 'Authentication'
     DRW = 'Download'
-    FNS = 'پایان'
+    FNS = 'ّFinish'
     ACP = 'Accept'
-    CNL = 'لغو'
+    CNL = 'Cancel'
 
 
 RESULT_PER_PAGE = 5
@@ -82,8 +82,6 @@ queries_dynamic_data = json.load(
     open(APP_DIR/"data/queries.json"))
 filters_dynamic_data = json.load(
     open(APP_DIR/"data/filters.json"))
-messages_dynamic_data = json.load(
-    open(APP_DIR/"data/messages.json"))
 
 # * remove the filter names that are not in the columns of dataset
 invalid_filters = []
@@ -108,8 +106,8 @@ states_static_data = json.load(
     open(APP_DIR/"static_data/states.json"))
 
 # merge dynamic and static data
-buttons_data, keyboards_data, states_data, queries_data, filters_data, messages_data = [
-    {}, {}, {}, {}, {}, {}]
+buttons_data, keyboards_data, states_data, queries_data, filters_data = [
+    {}, {}, {}, {}, {}]
 
 buttons_data.update(buttons_static_data)
 buttons_data.update(buttons_dynamic_data)
@@ -122,7 +120,6 @@ states_data.update(states_dynamic_data)
 
 queries_data.update(queries_dynamic_data)
 filters_data.update(filters_dynamic_data)
-messages_data.update(messages_dynamic_data)
 
 
 # def get_markdown_from()

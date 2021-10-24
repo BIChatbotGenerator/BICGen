@@ -5,8 +5,7 @@ from .utils import *
 def welcome(bot: TelegramBot, update: Update, state: TelegramState):
     chat_id = update.get_chat().get_id()
     try:
-        # res = MessageText.WEL.value.format(state.telegram_user.username)
-        res = messages_data['start'].format(state.telegram_user.username)
+        res = MessageText.WEL.value.format(state.telegram_user.username)
         bot.sendMessage(chat_id, res, reply_markup=auth_keyboard)
     except Exception as e:
         print(str(e))
@@ -24,8 +23,7 @@ def auth(bot: TelegramBot, update: Update, state: TelegramState):
         # res = MessageText.SLG.value.format(mobile_number)
         res_text = states_data['auth_home']['msgs'][0]
         res_keyboard = keyboards[states_data['auth_home']['keyboards'][0]]
-        res_msg = messages_data['Authenticate']['Successful']
-        bot.sendMessage(chat_id, res_msg)
+        bot.sendMessage(chat_id, "You are authenticated successfully.")
         bot.sendMessage(chat_id, res_text, reply_markup=res_keyboard)
         state_obj = state.get_memory()
         if state_obj.get('profile', None) is None:

@@ -9,9 +9,8 @@ from pandas import DataFrame
 
 
 class DataVisualizer:
-    def __init__(self, rel_file_path='Financial Sample.xlsx'):
-        my_sheet = 'Sheet1'
-        self.main_df: DataFrame = pd.read_excel(settings.BASE_DIR / rel_file_path, sheet_name=my_sheet)
+    def __init__(self, rel_file_path='Financial Sample.xlsx', sheet_name='Sheet1'):
+        self.main_df: DataFrame = pd.read_excel(settings.BASE_DIR / rel_file_path, sheet_name=sheet_name)
         self.df: DataFrame = self.main_df.copy()
 
     def num_of_fields(self):

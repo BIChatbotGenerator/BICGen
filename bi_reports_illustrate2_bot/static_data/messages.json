@@ -1,22 +1,22 @@
 {
-  "start": "Hi {},  Welcome to the CBIC.\nIf you are sure you are registered in the bot, click the “Authenticate”.\nOtherwise, contact to admin.",
-  "reset": "Hi {},  Welcome to the CBIC.\nIf you are sure you are registered in the bot, click the “Authenticate”.\nOtherwise, contact to admin.",
+  "start": "سلام {}، به ربات خودکار گزاش ساز خوش آمدید.\nاگر مطمئن هستید که در ربات ثبت نام کرده ای، روی “احراز هویت“ کلیک کنید.\nدر غیر اینصورت، با پشتیبانی تماس بگیرید.",
+  "reset": "سلام {}، به ربات خودکار گزاش ساز خوش آمدید.\nاگر مطمئن هستید که در ربات ثبت نام کرده ای، روی “احراز هویت“ کلیک کنید.\nدر غیر اینصورت، با پشتیبانی تماس بگیرید.",
   "Authenticate": {
-    "Successful": "You are authenticated successfully.",
-    "Fail": "I'm sorry, No users were found with your information.\nPlease contact to admin."
+    "Successful": "احراز هویت شما با موفقیت انجام شد.",
+    "Fail": "متأسفم ، هیچ کاربری با اطلاعات شما پیدا نشد.\nلطفاً با پشتیبانی تماس بگیرید."
   },
-  "Home": "Main menu",
-  "Settings": "Settings",
-  "Help": "Hi {}! 🌷\n\n💡 You can make a report, by:\nHome 👉 Make a Report 👉 [selecting report section] 👉 [select report] 👉 [filter parameter of report]\n\n💡 You can see your past reports, by:\nHome 👉 Reports List 👉 [filter List by date]\n\n💡 You can see your profile and change it, by:\nHome 👉 Profile 👉 Change Profile 👉 [changing item you allowed]\n\n💡 You can go settings ⚙ and see About, Help and Support, by:\nHome 👉 settings\n\nIf there’s a question click “Support” and send a ticket to us. 🙏",
-  "About": "This bot was  born to make a report for business intelligence.\nYou will be able to customize it too.\nVersion 1.0.0",
-  "Support": "Support",
-  "New_Ticket": "Please send your question or suggestion. 🙏",
-  "Profile": "Your Profile:\nFirst Name: {}\nLast Name: {}\nPhone Number: {}\nJob Position: {}",
-  "Change_Profile": "You can change your First Name and LastName.\nFor changing Phone Number or Job Position click “Support” and send a ticket to us.",
-  "First Name": "Please enter your First Name.",
-  "Last Name": "Please enter your Last Name.",
-  "Report_List": "Your Past Reports:[Report_List_Item]\n\nPage {} of {}, total {}",
+  "Home": "منو اصلی",
+  "Settings": "تنظیمات",
+  "Help": "سلام {}! 🌷\n\n💡 شما می توانید گزراش بسازید, از طریق:\nخانه 👉 ساخت گزارش 👉 [انتخاب بخش] 👉 [انتخاب گزارش] 👉 [اعمال فیلتر بر روی گزارش]\n\n💡 شما می توانید لیست گزارش های قبلی را مشاهد کنید, توسط:\nخانه 👉 لیست گزارش ها \n\n💡 شما می توانید پروفایل خود را مشاهده کنید و ویرایش کنید, by:\nخانه 👉 پروفایل 👉 تغییر پروفایل 👉 [تغییر موارد اجازه داده شده]\n\n💡 شما می توانید به تنطیمات بروید ⚙ و درباره، راهنما و پشتیبانی بروید, از طریق:\nخانه 👉 تنظیمات\n\nاگر سوالی است بر روی “پشتبانی” کلیک کنید و برای ما تیکت ارسال کنید. 🙏",
+  "About": "این یک ربات گزارش گیر برای هوش تجاری است.\nشما همچنین می توانید آن را سفارشی کنید.\nVersion 1.0.0",
+  "Support": "پشتیبانی",
+  "New_Ticket": "لطفا سوال یا پیشنهادات خود را ارسال کنید. 🙏",
+  "Profile": "پروفایل شما:\nنام: {}\nنام خانوادگی: {}\nPشماره تلفن: {}\nموقعیت شغلی: {}",
+  "Change_Profile": "شما می توانید نام و نام خانوادگی خود را تغییر دهید.\nبرای تغییر شماره تلفن یا موقعیت شغلی ، روی “پشتیبانی“ کلیک کنید و یک بلیط برای ما ارسال کنید.",
+  "First Name": "لطفا نام خود را وارد کنید.",
+  "Last Name": "لطفا نام خانوادگی خود را وارد کنید.",
+  "Report_List": "لیست گزارش های قبلی:[Report_List_Item]\n\nصفحه {} از {}, همه {}",
   "Report_List_Item": "\n\n{}.📝 {}\n📆 {}\n⬇ {}",
-  "Make_Report": "Please Choose one of the below sections.",
-  "Wrong_Command": "Remember, since I'm a robot and not a real human, it's best to spell words correctly or use the buttons below."
+  "Make_Report": "لطفاً یکی از بخشهای زیر را انتخاب کنید.",
+  "Wrong_Command": "به یاد داشته باشید ، از آنجا که من یک روبات هستم و یک انسان واقعی نیستم ، بهتر است کلمات را به درستی املا کرده یا از دکمه های زیر استفاده کنید."
 }

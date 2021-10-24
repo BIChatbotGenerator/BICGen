@@ -1,29 +1,29 @@
 {
-    "finish": {
-        "text": "Finish"
-    },
-    "save": {
-        "text": "Save"
-    },
-    "cancel": {
-        "text": "Cancel"
-    },
-    "Pie Chart": {
-        "text": "Pie Chart"
-    },
-    "Multi Group Chart": {
-        "text": "Multi Group Chart"
-    },
-    "Bar Chart": {
-        "text": "Bar Chart"
-    },
-    "Linear Chart": {
-        "text": "Linear Chart"
-    },
-    "next": {
-        "text": "Next ➡"
-    },
-    "prev": {
-        "text": "⬅ Previous"
-    }
+  "finish": {
+    "text": "پایان"
+  },
+  "save": {
+    "text": "ذخیره"
+  },
+  "cancel": {
+    "text": "لغو"
+  },
+  "Pie Chart": {
+    "text": "نمودار دایره ای"
+  },
+  "Multi Group Chart": {
+    "text": "نمودار چند ستونی"
+  },
+  "Bar Chart": {
+    "text": "نمودار میله‌ای"
+  },
+  "Linear Chart": {
+    "text": "نمودار خطی"
+  },
+  "next": {
+    "text": "بعدی ➡"
+  },
+  "prev": {
+    "text": "⬅ قبلی"
+  }
 }

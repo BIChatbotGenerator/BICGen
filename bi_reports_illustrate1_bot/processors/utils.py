@@ -402,7 +402,7 @@ for kb_name, data in keyboards_data.items():
             resize_keyboard=True
         )
     elif data['type'] == 'force':
-        keyboards[kb_name] = ForceReply.a(force_reply=True, input_field_placeholder=data["placeholder"])
+        keyboards[kb_name] = ForceReply.a(force_reply=True, input_field_placeholder=data.get("placeholder", None))
 
 # Keyboards
 auth_keyboard = ReplyKeyboardMarkup.a(keyboard=[

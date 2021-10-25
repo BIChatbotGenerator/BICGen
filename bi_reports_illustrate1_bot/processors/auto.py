@@ -17,14 +17,10 @@ def welcome(bot: TelegramBot, update: Update, state: TelegramState):
 def auth(bot: TelegramBot, update: Update, state: TelegramState):
     chat_id = update.get_chat().get_id()
     try:
+        # authenticate
         mobile_number = f"{update.get_message().contact.phone_number}"
-        # if mobile_number[0] != '+':
-        #     mobile_number = '+' + mobile_number
-        # res = MessageText.SLG.value.format(mobile_number)
-        res_text = states_data['auth_home']['msgs'][0]
-        res_keyboard = keyboards[states_data['auth_home']['keyboards'][0]]
-        bot.sendMessage(chat_id, "You are authenticated successfully.")
-        bot.sendMessage(chat_id, res_text, reply_markup=res_keyboard)
+        bot.sendMessage(chat_id, messages_data['auth_succeed'])
+        
         state_obj = state.get_memory()
         if state_obj.get('profile', None) is None:
             state.set_memory({
@@ -38,9 +34,10 @@ def auth(bot: TelegramBot, update: Update, state: TelegramState):
             state.set_memory({
                 'profile': state_obj['profile']
             })
+        go_to_state(bot, state, 'auth_home')
     except Exception as e:
         print(str(e))
-        bot.sendMessage(chat_id, MessageText.UEX.value,
+        bot.sendMessage(chat_id, messages_data['auth_failed'],
                         reply_markup=auth_keyboard)
         raise ProcessFailure
 
@@ -93,7 +90,6 @@ def filter_query(bot: TelegramBot, update: Update, state: TelegramState):
             go_to_state(bot, state, next_state_name)
         else:
             query_obj = queries_data.get(state_obj["query"], None)
-            print(msg)
             print(query_obj)
             if msg in filters_data and msg in query_obj["filters"]:
                 next_state_name = state.name + '_adjust'
@@ -181,18 +177,21 @@ def adjust_filter(bot: TelegramBot, update: Update, state: TelegramState):
                     else:
                         choices.append(msg)
                     state_obj['cur_filter_config']['choices'] = choices
+                    
+                    SEP = '\n➕ '
+                    resp = 'Selected values:\n➕ '
+                    resp += f"{SEP.join(state_obj['cur_filter_config']['choices'])}"
                 else:
-                    bot.sendMessage(chat_id, MessageText.IFP.value)
-
-                new_line_char = '\n'
-                resp = f"{MessageText.CHS.value}\n\n{new_line_char.join(state_obj['cur_filter_config']['choices'])}"
+                    docked_kb = get_keyboards_of_state(state.name)[0]
+                    bot.sendMessage(chat_id, MessageText.IFP.value, reply_markup=docked_kb)
+                    return
 
             # write last data to filter messgae
             inline_keyboard = get_inline_keyboard_of_state(
                 state_obj['states'][-1])
             res = bot.editMessageText(resp, chat_id, cur_filter_msg_id,
                                 parse_mode="MarkdownV2", reply_markup=inline_keyboard)
-            print(res)
+            # print(res)
 
             state.set_memory(state_obj)
 
@@ -225,6 +224,8 @@ def run_query(bot: TelegramBot, update: Update, state: TelegramState):
                     r.fig.path, "rb"), upload=True)
             else:
                 bot.sendMessage(chat_id, MessageText.UEX.value)
+        else:
+            bot.sendMessage(chat_id, MessageText.PVC.value)
     except Exception as e:
         print(str(e))
         bot.sendMessage(chat_id, MessageText.UEX.value)
@@ -232,35 +233,46 @@ def run_query(bot: TelegramBot, update: Update, state: TelegramState):
 
 code = ""
 for state_name, data in states_dynamic_data.items():
-    # handle input
+    # * data: state dict
+    
+    # if we must input something from the user, handle those here.
+    # you must keep state_obj variabel updated for next handlers.
     handle_input = ""
     if states_data[state_name].get('input', None):
-        handle_input = f"""set_vars_from_msg(state, "{data['input']}", msg)
-        state_obj = state.get_memory()"""
+        handle_input = f"""\
+set_vars_from_msg(state, "{data['input']}", msg)
+state_obj = state.get_memory()\
+"""
 
-    # handle state
+    # it means in this state, the user must be able to choose a query (report template) and
+    # in the previous state, it has choosed the deepest section it can.
     if data.get('queries', None):
-        handle_state = f"""next_state_name = MEDIA_STATE + "_" + msg
-        if next_state_name in inline_keyboards:
-            resp = MessageText.AFT.value.format(queries_data[msg]['text'])
-        else:
-            resp = MessageText.NFT.value.format(queries_data[msg]['text'])
-        state_obj["filters"] = dict()
-        state_obj.setdefault("states", []).append(next_state_name)
-        next_state_name = MEDIA_STATE"""
+        handle_state = f"""\
+next_state_name = MEDIA_STATE + "_" + msg
+if msg in {data['queries']}:
+    state_obj["filters"] = dict()
+    state_obj.setdefault("states", []).append(next_state_name)
+    next_state_name = MEDIA_STATE\
+"""
+        
+    # these states doesn't have determined rules for changing
     elif data.get('jump', None):
         handle_state = f"""next_state_name = "{data['jump']}" """
+        
+    # this state is in sections staets and just need to navigate normally
     else:
         handle_state = f"""next_state_name = "{state_name+'_'}" + msg"""
 
     # handle output
-    handle_output = f"""if next_state_name not in states_data:
-            bot.sendMessage(chat_id, MessageText.PVC.value)
-            return
-        if next_state_name in inline_keyboards:
-            state_obj.setdefault("states", []).append(next_state_name)
-        state.set_memory(state_obj)
-        go_to_state(bot, state, next_state_name, resp)"""
+    handle_output = f"""\
+if next_state_name not in states_data:
+    bot.sendMessage(chat_id, MessageText.PVC.value)
+    return
+if next_state_name in inline_keyboards:
+    state_obj.setdefault("states", []).append(next_state_name)
+state.set_memory(state_obj)
+go_to_state(bot, state, next_state_name, resp)\
+"""
 
     code += f"""\
 @processor(state_manager, from_states="{state_name}")
@@ -276,13 +288,14 @@ def {state_name}(bot, update, state):
         
         resp = None
             
-        {handle_input}
-        {handle_state}
-        {handle_output}
+        {add_tab_to_lines(handle_input, 2)}
+        {add_tab_to_lines(handle_state, 2)}
+        {add_tab_to_lines(handle_output, 2)}
 
     except Exception as e:
         print(str(e))
         bot.sendMessage(chat_id, MessageText.UEX.value)
         raise ProcessFailure\n\n\n"""
-re.sub('\n\t', '\n', code)
+# print(code, flush=True)
+# re.sub('\n\t', '\n', code)
 exec(code)

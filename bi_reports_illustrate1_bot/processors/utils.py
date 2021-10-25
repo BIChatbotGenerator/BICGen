@@ -3,6 +3,7 @@ from django_tgbot.state_manager import message_types, update_types, state_types
 from django_tgbot.types import inlinekeyboardbutton
 from django_tgbot.types.replykeyboardmarkup import ReplyKeyboardMarkup
 from django_tgbot.types.inlinekeyboardmarkup import InlineKeyboardMarkup
+from django_tgbot.types.forcereply import ForceReply
 from django_tgbot.types.keyboardbutton import KeyboardButton
 from django_tgbot.types.inlinekeyboardbutton import InlineKeyboardButton
 from django_tgbot.types.update import Update
@@ -36,11 +37,11 @@ class MessageText(Enum):
     FSU = 'The field registered'
     CFT = 'Choose a filter'
     FAD = 'Filter {} added successfully ✔'
-    CHS = 'Select one of following items\:'
+    CHS = 'Select one of the following\:'
     FDN = 'The filter paramaters already have been set. Click on Save to apply the filter and Cancel to forget this filter'
     IFP = 'The filter param is invalid ✖\nPlease enter a valid value 🙏'
-    NFT = 'We are in {}\\.\nYou can touch _*finish*_ button to go to the next step'  # Report State
-    AFT = 'We are in {}\\.\nNow select your intended filters 🔍'  # Apply Filter
+    NFT = 'You can touch _*finish*_ button to go to the next step'  # Report State
+    AFT = 'Now select your intended filters 🔍'  # Apply Filter
     RVA = 'The Values received successfully\\! \nClick on _*Save*_ button to apply these to filter'
 
 
@@ -82,6 +83,8 @@ queries_dynamic_data = json.load(
     open(APP_DIR/"data/queries.json"))
 filters_dynamic_data = json.load(
     open(APP_DIR/"data/filters.json"))
+messages_dynamic_data = json.load(
+    open(APP_DIR/"data/messages.json"))
 
 # * remove the filter names that are not in the columns of dataset
 invalid_filters = []
@@ -106,8 +109,8 @@ states_static_data = json.load(
     open(APP_DIR/"static_data/states.json"))
 
 # merge dynamic and static data
-buttons_data, keyboards_data, states_data, queries_data, filters_data = [
-    {}, {}, {}, {}, {}]
+buttons_data, keyboards_data, states_data, queries_data, filters_data, messages_data = [
+    {}, {}, {}, {}, {}, {}]
 
 buttons_data.update(buttons_static_data)
 buttons_data.update(buttons_dynamic_data)
@@ -120,9 +123,14 @@ states_data.update(states_dynamic_data)
 
 queries_data.update(queries_dynamic_data)
 filters_data.update(filters_dynamic_data)
-
+messages_data.update(messages_dynamic_data)
 
 # def get_markdown_from()
+
+def add_tab_to_lines(lines: str, number: int=1):
+    replace_with_str = '\n' + (number * 4) * ' '
+    return re.sub('\n', replace_with_str, lines)
+
 
 def get_message_from_update(bot: TelegramBot, update: Update):
     msg = ''
@@ -194,15 +202,25 @@ def go_to_state(bot: TelegramBot, state: TelegramState, state_name: str, msg=Non
     chat_id = state.telegram_chat.telegram_id
     state_obj = state.get_memory()
 
+    # get filtered message
     msg = msg if msg else states_data[state_name]['msgs'][0]
     msg = message_trans(state, msg)
+    
+    # * add state path
+    msg = get_state_path(state_name=state_name, state=state) + '\n\n' + msg
+    
+    # get keyboard(s) of the state (docked or inline or both if exist)
     keyboards_of_state = get_keyboards_of_state(state_name)
+    
     if keyboards_of_state:
+        # because the state have a keyboard, we can go to that safely
         state.set_name(state_name)
-        print(msg)
+        
         # reply keyboard
         bot.sendMessage(
             chat_id, msg, reply_markup=keyboards_of_state[0], parse_mode="MarkdownV2")
+        
+        # if we have inline keyboard too
         if len(keyboards_of_state) == 2:
             if state_name == 'auth_home_reportsList':
                 update_reports_list_config(state, 'init')
@@ -211,20 +229,32 @@ def go_to_state(bot: TelegramBot, state: TelegramState, state_name: str, msg=Non
                 kb_name = state_obj["reportsKeyboardName"]
                 keyboards_of_state[1] = keyboards[kb_name]
             else:
+                # filter message to send with inilne keyboard
                 msg = states_data[state_name]['msgs'][1]
                 msg = message_trans(state, msg)
-
+                
             sent_msg = bot.sendMessage(
                 chat_id=chat_id, text=msg, reply_markup=keyboards_of_state[1], parse_mode="MarkdownV2", disable_web_page_preview=True)  # inline keyboard
             state_obj["last_inline_message_id"] = sent_msg.get_message_id()
-            # state.set_memory(state_obj)
+            
+        elif len(states_data[state_name]['msgs']) == 2:
+            msg = states_data[state_name]['msgs'][1]
+            msg = message_trans(state, msg)
+            bot.sendMessage(chat_id=chat_id, text=msg, parse_mode="MarkdownV2", disable_web_page_preview=True)
+                
+    # when we have no keyboard for a state, it means there is no such a state.
+    # So, just go back.
     else:
         go_to_prev_state(bot, state)
         return
 
+    # delete the last inline keyboard for more readability and
+    # if next state needs inline keyboard,send a message with that keyboard and
+    # keep the id for future deleting
     if state_obj.get('states', None):
         try:
-            bot.deleteMessage(chat_id, state_obj["last_inline_message_id"])
+            pass
+            # bot.deleteMessage(chat_id, state_obj["last_inline_message_id"])
         except:
             pass
         inline_keyboard = get_inline_keyboard_of_state(state_obj['states'][-1])
@@ -234,6 +264,7 @@ def go_to_state(bot: TelegramBot, state: TelegramState, state_name: str, msg=Non
             state_obj["last_inline_message_id"] = sent_msg.get_message_id()
 
     # save new state to database
+    # bot.sendMessage(chat_id, 'message_txt', reply_markup=ForceReply.a(force_reply=True, input_field_placeholder='placeholder'))
     state.set_memory(state_obj)
 
 
@@ -325,6 +356,33 @@ def get_multi_select_repr(filter_config: dict):
 def get_min_max_repr(filter_config: dict):
     return f"from {filter_config['min']} to {filter_config['max']}"
 
+def get_state_path(state_name: str, state: TelegramState):
+    PSEP = ' ⇨ ' # ➖
+    if state_name.startswith('auth'):
+        passed_dynamic_states = state_name.split('_', maxsplit=1)
+        if len(passed_dynamic_states) > 1:
+            repr_dynamic_states = passed_dynamic_states[1]
+            return PSEP.join([buttons_data[k]['text'] for k in repr_dynamic_states.split('_')])
+    elif state_name.startswith('query_filter'):
+        state_obj = state.get_memory()
+        path = ''
+        
+        # get dynamic path (first part of the path)
+        dynamic_states = state_obj.get("states", [])
+        if dynamic_states:
+            path = get_state_path(dynamic_states[0], state)
+
+        # get operational path (second part of the path)
+        path += PSEP + queries_data[state_obj["query"]]["text"] + PSEP + 'Filters'
+        state_parts = state_name.split('query_filter_', maxsplit=1)
+        if len(state_parts) == 2:
+            op = state_parts[1]
+            if op == 'adjust':
+                path += PSEP + state_obj['cur_filter']
+            elif op == 'run':
+                path += PSEP + 'Chart'
+        return path
+    return ''
 
 # buttons translator
 button_trans = {v['text']: k for k, v in buttons_data.items()}
@@ -343,6 +401,8 @@ for kb_name, data in keyboards_data.items():
                 text=buttons_data[btn]['text']) for btn in btn_list] for btn_list in data["buttons"]],
             resize_keyboard=True
         )
+    elif data['type'] == 'force':
+        keyboards[kb_name] = ForceReply.a(force_reply=True, input_field_placeholder=data["placeholder"])
 
 # Keyboards
 auth_keyboard = ReplyKeyboardMarkup.a(keyboard=[

@@ -50,8 +50,7 @@ class TelegramBot(AbstractTelegramBot):
                 state_obj = state.get_memory()
                 state_obj.pop('states', None)
                 state.set_memory(state_obj)
-                go_to_state(bot, state, 'auth_home',
-                            buttons_data["ltr-home"]["text"])
+                go_to_state(bot, state, 'auth_home')
             elif msg == "back":
                 go_to_prev_state(bot, state)
         except Exception as e:

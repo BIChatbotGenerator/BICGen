@@ -27,15 +27,22 @@
     "buttons": [["newTicket"], ["home", "back"]]
   },
   "profile": {
-    "type": "inline",
-    "buttons": [["changeProfile"]]
+    "type": "reply",
+    "buttons": [["changeProfile"], ["home", "back"]]
   },
   "changeProfile": {
-    "type": "reply",
+    "type": "inline",
     "buttons": [
-      ["firstName", "lastName"],
-      ["home", "back"]
+      ["firstName", "lastName"]
     ]
+  },
+  "forcedChangeProfileFirstName": {
+    "type": "force",
+    "placeholder": "Enter Your First Name"
+  },
+  "forcedChangeProfileLastName": {
+    "type": "force",
+    "placeholder": "Enter Your Last Name"
   },
   "sections": {
     "type": "reply",

@@ -1,7 +1,7 @@
 {
   "auth_home": {
     "keyboards": ["home"],
-    "msgs": ["\ud83c\udfd8 Home"]
+    "msgs": [""]
   },
   "auth_home_settings": {
     "keyboards": ["settings"],
@@ -30,25 +30,26 @@
     "msgs": ["Under Construction🔧"]
   },
   "auth_home_profile": {
-    "keyboards": ["back_and_home", "profile"],
+    "keyboards": ["profile"],
     "msgs": [
-      "Your Profile is \ud83d\udc64 :",
       "First Name: {profile.first_name}\nLast Name: {profile.last_name}\nPhone Number: {profile.mobile_number}"
     ]
   },
   "auth_home_profile_changeProfile": {
-    "keyboards": ["changeProfile"],
-    "msgs": ["Please select one of these to change "]
+    "keyboards": ["back_and_home", "changeProfile"],
+    "msgs": ["Please select one of these to change ", 
+      "First Name: {profile.first_name}\nLast Name: {profile.last_name}\nPhone Number: {profile.mobile_number}"
+    ]
   },
   "auth_home_profile_changeProfile_firstName": {
     "input": "{profile.first_name}",
-    "keyboards": ["back_and_home"],
+    "keyboards": ["forcedChangeProfileFirstName"],
     "msgs": ["Please enter your First Name"],
     "jump": "auth_home_profile_changeProfile"
   },
   "auth_home_profile_changeProfile_lastName": {
     "input": "{profile.last_name}",
-    "keyboards": ["back_and_home"],
+    "keyboards": ["forcedChangeProfileLastName"],
     "msgs": ["Please enter your Last Name"],
     "jump": "auth_home_profile_changeProfile"
   },
